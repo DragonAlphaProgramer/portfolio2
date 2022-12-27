@@ -16,6 +16,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  *
@@ -79,6 +84,8 @@ public class scrabble_punkty extends javax.swing.JFrame {
         usuwanieG = new javax.swing.JButton();
         piedziesiatka = new javax.swing.JCheckBox();
         jButton4 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         jCheckBox8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jCheckBox8.setText("7");
@@ -221,92 +228,94 @@ public class scrabble_punkty extends javax.swing.JFrame {
             }
         });
 
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setAutoscrolls(false);
+        jScrollPane2.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(8, 8, 8)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton2))
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jCheckBox20)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jRadioButton3)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jRadioButton4))
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(usuwanieG, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(dodawanieG, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(203, 203, 203)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel7))
-                                    .addComponent(jLabel6))))
-                        .addGap(75, 76, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(454, 454, 454)
-                        .addComponent(piedziesiatka)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(8, 8, 8)
+                                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jButton2))
+                                        .addComponent(jLabel1))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jRadioButton1)
+                                        .addComponent(jRadioButton2)
+                                        .addComponent(jCheckBox20)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jRadioButton3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jRadioButton4))
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))))
+                                .addComponent(jLabel2)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(usuwanieG, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(dodawanieG, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel5)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jLabel7))
+                                        .addComponent(jLabel6))
+                                    .addGap(75, 75, 75)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(piedziesiatka)
+                                .addGap(21, 21, 21))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(usuwanieG)
-                            .addComponent(dodawanieG)))
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(181, 181, 181)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jRadioButton3)
                                     .addComponent(jRadioButton4)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jRadioButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -314,17 +323,28 @@ public class scrabble_punkty extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCheckBox20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addGap(44, 44, 44)
-                                .addComponent(piedziesiatka)
-                                .addGap(7, 7, 7)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(piedziesiatka))
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(usuwanieG)
+                                    .addComponent(dodawanieG))
+                                .addGap(24, 24, 24))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(17, 17, 17))
         );
 
@@ -365,7 +385,7 @@ public class scrabble_punkty extends javax.swing.JFrame {
         jLabel4.setText((String.valueOf(slowo)).toUpperCase());
 
         jLabel4.setText(slowo);
-        
+
         for (int i = 0; i < slowo.length(); i++) {
             if (jRadioButton3.isSelected() == true) {
                 mnoznik = 2;
@@ -386,249 +406,249 @@ public class scrabble_punkty extends javax.swing.JFrame {
             }
             switch (litera) {
                 case 'A':
-                punkty = punkty + 1 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 1 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Ą':
-                punkty = punkty + 5 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 5 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'B':
-                punkty = punkty + 3 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 3 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'C':
-                punkty = punkty + 2 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 2 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Ć':
-                punkty = punkty + 6 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 6 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'D':
-                punkty = punkty + 2 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 2 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'E':
-                punkty = punkty + 1 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 1 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Ę':
-                punkty = punkty + 5 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 5 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'F':
-                punkty = punkty + 5 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 5 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'G':
-                punkty = punkty + 3 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 3 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'H':
-                punkty = punkty + 3 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 3 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'I':
-                punkty = punkty + 1 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 1 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'J':
-                punkty = punkty + 3 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 3 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'K':
-                punkty = punkty + 2 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 2 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'L':
-                punkty = punkty + 2 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 2 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Ł':
-                punkty = punkty + 3 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 3 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'M':
-                punkty = punkty + 2 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 2 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'N':
-                punkty = punkty + 1 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 1 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Ń':
-                punkty = punkty + 7 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 7 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'O':
-                punkty = punkty + 1 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 1 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Ó':
-                punkty = punkty + 5 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 5 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'P':
-                punkty = punkty + 2 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 2 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'R':
-                punkty = punkty + 1 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 1 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'S':
-                punkty = punkty + 1 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 1 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Ś':
-                punkty = punkty + 5 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 5 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'T':
-                punkty = punkty + 2 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 2 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'U':
-                punkty = punkty + 3 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 3 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'W':
-                punkty = punkty + 1 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 1 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Y':
-                punkty = punkty + 2 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 2 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Z':
-                punkty = punkty + 1 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 1 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Ź':
-                punkty = punkty + 9 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 9 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'Ż':
-                punkty = punkty + 5 * mnoznik;
-                premki = new StringBuilder(premki).append(litera).append(" ,").toString();
-                break;
+                    punkty = punkty + 5 * mnoznik;
+                    premki = new StringBuilder(premki).append(litera).append(" ,").toString();
+                    break;
                 case 'a':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ą':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 'b':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'c':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'ć':
-                punkty = punkty + 6;
-                break;
+                    punkty = punkty + 6;
+                    break;
                 case 'd':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'e':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ę':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 'f':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 'g':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'h':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'i':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'j':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'k':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'l':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'ł':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'm':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'n':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ń':
-                punkty = punkty + 7;
-                break;
+                    punkty = punkty + 7;
+                    break;
                 case 'o':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ó':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 'p':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'r':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 's':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ś':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 't':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'u':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'w':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'y':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'z':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ź':
-                punkty = punkty + 9;
-                break;
+                    punkty = punkty + 9;
+                    break;
                 case 'ż':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
             }
         }
-        if(jRadioButton1.isSelected() == true||jRadioButton2.isSelected() == true){
-        if (jRadioButton1.isSelected() == true) {
-            punkty = punkty * 2;
-            premia_slowna = 2;
-            if (jCheckBox20.isSelected() == true) {
+        if (jRadioButton1.isSelected() == true || jRadioButton2.isSelected() == true) {
+            if (jRadioButton1.isSelected() == true) {
                 punkty = punkty * 2;
-                premia_slowna = 4;
+                premia_slowna = 2;
+                if (jCheckBox20.isSelected() == true) {
+                    punkty = punkty * 2;
+                    premia_slowna = 4;
+                }
             }
-        }
-        if (jRadioButton2.isSelected() == true) {
-            punkty = punkty * 3;
-            premia_slowna = 3;
-            if (jCheckBox20.isSelected() == true) {
+            if (jRadioButton2.isSelected() == true) {
                 punkty = punkty * 3;
-                premia_slowna = 9;
+                premia_slowna = 3;
+                if (jCheckBox20.isSelected() == true) {
+                    punkty = punkty * 3;
+                    premia_slowna = 9;
+                }
             }
-        }
-        }else{
+        } else {
             premia_slowna = 1;
         }
         jTextField1.setText("");
@@ -639,17 +659,17 @@ public class scrabble_punkty extends javax.swing.JFrame {
         }
         switch (premia_slowna) {
             case 2:
-            pomoc.concat("x2");
-            break;
+                pomoc.concat("x2");
+                break;
             case 4:
-            pomoc.concat("x2x2");
-            break;
+                pomoc.concat("x2x2");
+                break;
             case 3:
-            pomoc.concat("x3");
-            break;
+                pomoc.concat("x3");
+                break;
             case 9:
-            pomoc.concat("x3x3");
-            break;
+                pomoc.concat("x3x3");
+                break;
         }
         jLabel4.setText(pomoc);
         jLabel1.setText("PUNKTY ZA SŁOWO:");
@@ -662,7 +682,7 @@ public class scrabble_punkty extends javax.swing.JFrame {
         jCheckBox20.setSelected(false);
         jLabel2.setText(String.valueOf(punkty));
         jButton3.setEnabled(true);
-        if("".equals(slowo)){
+        if ("".equals(slowo)) {
             jLabel2.setText("Brak słowa");
             jLabel6.setText("...");
             jLabel7.setText("...");
@@ -676,39 +696,39 @@ public class scrabble_punkty extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         dodawanieG.setEnabled(false);
         usuwanieG.setEnabled(false);
-        if("Brak słowa".equals(jLabel2.getText())){
-            slowo="?";
+        if ("Brak słowa".equals(jLabel2.getText())) {
+            slowo = "?";
         }
         if (piedziesiatka.isSelected() == true) {
             punkty = punkty + 50;
         }
-        
-        switch(mnoznik){
+
+        switch (mnoznik) {
             case 2:
-            slowo = slowo.concat("(Lx2)");
-                    break;
-                    case 3:
-            slowo = slowo.concat("(Lx3)");
-                    break;
+                slowo = slowo.concat("(Lx2)");
+                break;
+            case 3:
+                slowo = slowo.concat("(Lx3)");
+                break;
         }
         jTable1.setValueAt(slowo, tura, gracz * 2 - 2);
         switch (premia_slowna) {
             case 2:
-            slowo = slowo.concat("(Sx2)");
-            System.out.println(slowo);
-            break;
+                slowo = slowo.concat("(Sx2)");
+                System.out.println(slowo);
+                break;
             case 4:
-            slowo = slowo.concat("(Sx2x2)");
-            System.out.println(slowo);
-            break;
+                slowo = slowo.concat("(Sx2x2)");
+                System.out.println(slowo);
+                break;
             case 3:
-            slowo = slowo.concat("(Sx3)");
-            System.out.println(slowo);
-            break;
+                slowo = slowo.concat("(Sx3)");
+                System.out.println(slowo);
+                break;
             case 9:
-            slowo = slowo.concat("(Sx3x3)");
-            System.out.println(slowo);
-            break;
+                slowo = slowo.concat("(Sx3x3)");
+                System.out.println(slowo);
+                break;
         }
         jTable1.setValueAt(slowo, tura, gracz * 2 - 2);
         if (piedziesiatka.isSelected() == true) {
@@ -778,40 +798,80 @@ public class scrabble_punkty extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String sprawdzane = null;
         slowo = jTextField1.getText();
-        if(!"".equals(jTextField1.getText())){
-        String tmp = slowo.toLowerCase();
-        boolean pasuje = false;
-        String regex = tmp.replace("?", ".*{1}[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]");
-        System.out.println(regex);
-        try {
-            String workingDirectory = System.getProperty("user.dir") + File.separator;
-            File plik = new File(workingDirectory, "baza.txt");
-            try (BufferedReader szperacz = new BufferedReader(new InputStreamReader(new FileInputStream(plik), "UTF8"));) {
-                while ((sprawdzane = szperacz.readLine()) != null) {
-                    if (((tmp.toLowerCase().equals(sprawdzane)) || ((sprawdzane.matches(regex)) == true)) && (tmp.length() == sprawdzane.length())) {
-                        pasuje = true;
-                        System.out.println(sprawdzane);
-                        break;
+        if (!"".equals(jTextField1.getText())) {
+            String tmp = slowo.toLowerCase();
+            boolean pasuje = false;
+            String regex = tmp.replace("?", ".*{1}[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]");
+            System.out.println(regex);
+            try {
+                String workingDirectory = System.getProperty("user.dir") + File.separator;
+                File plik = new File(workingDirectory, "baza.txt");
+                try (BufferedReader szperacz = new BufferedReader(new InputStreamReader(new FileInputStream(plik), "UTF8"));) {
+                    while ((sprawdzane = szperacz.readLine()) != null) {
+                        if (((tmp.toLowerCase().equals(sprawdzane)) || ((sprawdzane.matches(regex)) == true)) && (tmp.length() == sprawdzane.length())) {
+                            pasuje = true;
+                            System.out.println(sprawdzane);
+                            break;
+                        }
+                    }
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(scrabble_punkty.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            jTextArea1.setLineWrap(true);
+            jTextArea1.setWrapStyleWord(true);
+            jLabel1.setText("SPRAWDZANE SŁOWO");
+            jLabel4.setText((String.valueOf(slowo.toUpperCase())));
+            jLabel7.setText(String.valueOf("..."));
+            jLabel6.setText("...");
+            jTextArea1.setText("");
+            if (tmp.equals(sprawdzane) || pasuje == true) {
+                jButton1.setEnabled(true);
+                jLabel2.setText("Słowo jest dopuszczalne");
+                if (jTextField1.getText().length() != 0) {
+                    try {
+                        Connection connect = Jsoup.connect("http://www.sjp.pl/" + slowo.toLowerCase());
+                        Document document = connect.get();
+                        Elements znaczenia = document.select("p");
+                        jTextArea1.setText("");
+                        for (Element elem : znaczenia) {
+                            if (elem.text().equals("POWIĄZANE HASŁA:") || elem.text().equals("KOMENTARZE")) {
+                                break;
+                            }
+                            System.out.println(elem.text());
+
+                            jTextArea1.append(elem.text() + "\n");
+
+                        }
+                    } catch (IOException e) {
+                        jTextArea1.setText("brak dostępu do sjp.pl\nlub słowo nie istnieje");
+                    }
+                }
+            } else {
+                jButton1.setEnabled(false);
+                jButton3.setEnabled(false);
+                jLabel2.setText("Słowo nie jest dopuszczalne");
+                if (jTextField1.getText().length() != 0) {
+                    try {
+                        Connection connect = Jsoup.connect("http://www.sjp.pl/" + slowo.toLowerCase());
+                        Document document = connect.get();
+                        Elements znaczenia = document.select("p");
+                        jTextArea1.setText("");
+                        for (Element elem : znaczenia) {
+                            if (elem.text().equals("POWIĄZANE HASŁA:") || elem.text().equals("KOMENTARZE")) {
+                                break;
+                            } else {
+                                    System.out.println(elem.text());
+                                    jTextArea1.append(elem.text() + "\n");
+                            }
+                        }
+                    } catch (IOException e) {
+                        jTextArea1.setText("brak dostępu do sjp.pl\nlub słowo nie istnieje");
                     }
                 }
             }
-        } catch (IOException ex) {
-            Logger.getLogger(scrabble_punkty.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        jLabel1.setText("SPRAWDZANE SŁOWO");
-        jLabel4.setText((String.valueOf(slowo.toUpperCase())));
-        jLabel7.setText(String.valueOf("..."));
-        jLabel6.setText("...");
-        if (tmp.equals(sprawdzane) || pasuje == true) {
-            jButton1.setEnabled(true);
-            jLabel2.setText("Słowo jest dopuszczalne");
+            pasuje = false;
         } else {
-            jButton1.setEnabled(false);
-            jButton3.setEnabled(false);
-            jLabel2.setText("Słowo nie jest dopuszczalne");
-        }
-        pasuje = false;
-        }else{
             jButton1.setEnabled(true);
             jButton3.setEnabled(true);
             jLabel4.setText("");
@@ -829,101 +889,101 @@ public class scrabble_punkty extends javax.swing.JFrame {
             System.out.println(i);
             switch (litera) {
                 case 'a':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ą':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 'b':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'c':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'ć':
-                punkty = punkty + 6;
-                break;
+                    punkty = punkty + 6;
+                    break;
                 case 'd':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'e':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ę':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 'f':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 'g':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'h':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'i':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'j':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'k':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'l':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'ł':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'm':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'n':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ń':
-                punkty = punkty + 7;
-                break;
+                    punkty = punkty + 7;
+                    break;
                 case 'o':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ó':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 'p':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'r':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 's':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ś':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
                 case 't':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'u':
-                punkty = punkty + 3;
-                break;
+                    punkty = punkty + 3;
+                    break;
                 case 'w':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'y':
-                punkty = punkty + 2;
-                break;
+                    punkty = punkty + 2;
+                    break;
                 case 'z':
-                punkty = punkty + 1;
-                break;
+                    punkty = punkty + 1;
+                    break;
                 case 'ź':
-                punkty = punkty + 9;
-                break;
+                    punkty = punkty + 9;
+                    break;
                 case 'ż':
-                punkty = punkty + 5;
-                break;
+                    punkty = punkty + 5;
+                    break;
             }
         }
         jTable1.setValueAt(punkty, tura, gracz * 2 - 1);
@@ -1041,7 +1101,9 @@ public class scrabble_punkty extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JCheckBox piedziesiatka;
     private javax.swing.JButton usuwanieG;
